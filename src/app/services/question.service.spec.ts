@@ -7,20 +7,31 @@ import { of } from 'rxjs';
 
 describe('QuestionService', () => {
  
+  let service: QuestionService; 
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
       providers: [QuestionService]
     });
+
+    service = TestBed.get(QuestionService); 
   });
 
+
+  
+
   it('should be created', () => {
-    const service: QuestionService = TestBed.get(QuestionService);
+   
     expect(service).toBeTruthy();
   });
   it('should load data', () => {
-    const service: QuestionService = TestBed.get(QuestionService);
-    expect(service).toBeTruthy();
+    
+    service.getQuestions().subscribe((data) => {
+      expect(data.length).toBe(5);
+    });
+
+    
   });
   
 });

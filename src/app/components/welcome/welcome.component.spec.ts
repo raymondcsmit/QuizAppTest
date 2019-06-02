@@ -3,6 +3,9 @@ import { Location, CommonModule } from '@angular/common';
 import { WelcomeComponent } from './welcome.component';
 import { RouterModule, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
+import { QuizComponent } from '../quiz/quiz.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('WelcomeComponent', () => {
   let component: WelcomeComponent;
@@ -10,11 +13,11 @@ describe('WelcomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule, RouterTestingModule.withRoutes([])],
-      declarations: [ WelcomeComponent ],
-      providers:[Location]
+      imports: [RouterModule, ReactiveFormsModule, RouterTestingModule.withRoutes([{ path: 'quiz', component: QuizComponent }])],
+      declarations: [WelcomeComponent, QuizComponent],
+      providers: [Location]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -26,6 +29,12 @@ describe('WelcomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+
+
+
+
   it('should render title in a h4 tag', () => {
     const fixture = TestBed.createComponent(WelcomeComponent);
     fixture.detectChanges();
@@ -33,22 +42,23 @@ describe('WelcomeComponent', () => {
     expect(compiled.querySelector('h4').textContent).toContain('Quiz App');
   });
 
-  it('should go to url',
-    async(inject([Router, Location], (router: Router, location: Location) => {
 
-    let fixture = TestBed.createComponent(WelcomeComponent);
-    fixture.detectChanges();
+
+
+  it('should go to url', async(inject([Router, Location], (router: Router, location: Location) => {
+
+    spyOn(component, 'ngOnInit');
     const elem = fixture.debugElement;
-    const button = elem.query(e => e.name === 'startquiz');
-    expect(button.nativeElement.textContent.trim()).toContain('Start Quiz');
-    console.log(button);
-    button.nativeElement.click();
-
+    const btn = elem.query(e => e.nativeElement.id == 'startquiz');
+    btn.nativeElement.click();
+    //btn.triggerEventHandler('click', null);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-      expect(location.path()).toEqual('/quiz');
-      console.log('after expect');
+      console.log(location.path());
+      expect(location.path()).toContain('quiz');
+      // expect(component.productSelection).toHaveBeenCalled();
     });
   })));
+
 
 });
