@@ -28,7 +28,7 @@ describe('QuizComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeTruthy(); 
   });
   it('should start with a testFinished at false', () => {
     
@@ -46,15 +46,4 @@ describe('QuizComponent', () => {
 
 });
 
-
-// it("should call getUsers and return list of users", async(() => {
-//   const response: Question[] = [];
-
-//   spyOn(QuestionService, 'getQuestions').and.returnValue(of(response))
-
-//   homeComponent.getUsers();
-
-//   fixture.detectChanges();
-
-//   expect(homeComponent.listOfUsers).toEqual(response);
-// }));
+ 
